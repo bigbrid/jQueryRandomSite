@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>漂亮小姐姐</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        h1{text-align: center;margin-top:20px;}
+        ul,li{list-style: none;}
+        body{width: 100%;}
+        .box{position: relative;width:600px;margin: 40px auto 0;}
+        .list{height: 465px;position: relative;}
+        .list li{width: 100px;height: 140px;position: absolute;overflow: hidden;z-index: 2;}
+        .list li:nth-child(1){top: 0;left: 0px;}
+        .list li:nth-child(2){top: 150px;left: 80px;}
+        .list li:nth-child(3){top: 310px;left: 160px;}
+        .list li:nth-child(4){top: 310px;left: 320px;}
+        .list li:nth-child(5){top: 150px;left: 400px;}
+        .list li:nth-child(6){top: 0px;left: 480px;}
+        .list img{display: block;width: 100%;box-sizing: border-box;border: 1px solid #ccc}
+        .list .notclass{width: 180px;top: 20px;left: 50%;transform: translate(-50%);border: none;z-index: 0;height: 252px;}
+        .list .coment{width: 100%;height: 252px; position: relative;}
+        .list .coment img{border: none;position: absolute;top: 0;left: 0;}
+        .list .coment .want{width: 92px;height:87px;top: 154px;overflow: hidden;;left: 50%;transform: translate(-50%);position: absolute;}
+        .list .coment .heart{width: 103px;top: 160px;left: 40px;position: absolute;;animation: heart 2s linear infinite both;transform-origin: 52px 19px}
+       .tips{text-align: center;color: palevioletred;font-weight: bold;}
+        @keyframes heart {
+            50%{transform:scale(1.05) }
+        }
+        .put{text-align: center;margin-top: 20px;}
+
+  
+  
+    </style>
+
+</head>
+<body>
+    <div class="box">
+        <ul class="list">
+            <li><img src="/jQueryRandomSite/lib/img/1.jpg" /></li>
+            <li><img src="/jQueryRandomSite/lib/img/2.jpg" /></li>
+            <li><img src="/jQueryRandomSite/lib/img/3.jpg" /></li>
+            <li><img src="/jQueryRandomSite/lib/img/4.jpg" /></li>
+            <li><img src="/jQueryRandomSite/lib/img/5.jpg" /></li>
+            <li><img src="/jQueryRandomSite/lib/img/6.jpg" /></li>
+            <li class="notclass">
+                <div class="coment">
+                    <div class="want"><img src="/jQueryRandomSite/lib/img/6.jpg"  class="img-like"/></div>
+                    <img src="/jQueryRandomSite/lib/img/ds.png" class="img-ds"/>
+                    <img src="/jQueryRandomSite/lib/img/heart.png" class="heart">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <p class="tips">小姐姐都好漂亮，你喜欢哪一位？</p>
+    <div class="put">
+        <button class="sort random-btn">我喜欢？</button>
+    </div>
+    <script src="/jQueryRandomSite/lib/src/jquery-1.12.0.min.js"></script>
+    <script src="/jQueryRandomSite/lib/src/jquery-random-site.js"></script>
+    <script>
+        $(".list").randomSite({
+            randomBtn:".random-btn",
+            notClass:".notclass",
+            afterCallBack:doSelet,
+            beforeCallBack:function(position){
+                console.log(position)
+            }
+        })
+        function doSelet(position,item){
+            var li = $(item);
+            var n = 0;
+            var timer = null;
+            console.log(position)
+            clearInterval(timer);
+            timer = setInterval(function(){
+                n++;
+                if(n>=li.length){
+                    clearInterval(timer);
+                    n = Math.floor(Math.random()*li.length+1);
+                    $(".tips").text("我要第" + n +"位小姐姐，嘻嘻嘻，嘿嘿嘿！")
+                }
+                $('.img-like').attr("src",li.eq(n).find("img").attr("src"))
+            }, 100);
+        }
+    </script>
+
+
+</body>
+</html>
